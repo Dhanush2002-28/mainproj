@@ -1,6 +1,7 @@
 # FraudGuard AI - Advanced Fraud Detection System
 
 ## 📋 Table of Contents
+
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Technology Stack](#technology-stack)
@@ -21,6 +22,7 @@
 FraudGuard AI is a comprehensive fraud detection system that leverages advanced machine learning algorithms to identify potentially fraudulent transactions in real-time. The system combines cutting-edge AI technology with an intuitive user interface to provide businesses with robust fraud prevention capabilities.
 
 ### Key Objectives
+
 - **Real-time Detection**: Instant fraud analysis with millisecond response times
 - **High Accuracy**: Achieve >95% accuracy in fraud identification
 - **User-Friendly Interface**: Intuitive React-based dashboard for easy management
@@ -30,6 +32,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 ## ✨ Features
 
 ### Core Functionality
+
 - **AI-Powered Detection**: Advanced machine learning models for accurate fraud prediction
 - **Real-time Analysis**: Instant transaction evaluation and risk scoring
 - **User Authentication**: Secure Firebase-based authentication system
@@ -39,6 +42,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 - **Historical Analytics**: Trend analysis and reporting capabilities
 
 ### User Experience
+
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Dark/Light Mode**: Customizable UI themes
 - **Animated Components**: Smooth, professional animations using Framer Motion
@@ -48,6 +52,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 ## 🛠 Technology Stack
 
 ### Frontend
+
 - **React 18.2.0**: Modern React with hooks and functional components
 - **TypeScript**: Type-safe development environment
 - **Vite**: Fast build tool and development server
@@ -59,6 +64,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 - **Zod**: Schema validation and type inference
 
 ### Backend
+
 - **Python 3.9+**: Core backend language
 - **Flask**: Lightweight web framework
 - **Flask-CORS**: Cross-origin resource sharing
@@ -69,11 +75,13 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 - **Imbalanced-learn**: Handling imbalanced datasets
 
 ### Database & Authentication
+
 - **Firebase Authentication**: Secure user management
 - **Firestore**: NoSQL document database
 - **Firebase Storage**: File storage and management
 
 ### Development & Deployment
+
 - **Git**: Version control
 - **ESLint**: Code linting and quality
 - **Prettier**: Code formatting
@@ -84,6 +92,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 ## 🏗 Architecture
 
 ### System Overview
+
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   React Client  │────│   Flask API     │────│  ML Models      │
@@ -97,6 +106,7 @@ FraudGuard AI is a comprehensive fraud detection system that leverages advanced 
 ```
 
 ### Frontend Architecture
+
 ```
 src/
 ├── components/
@@ -117,6 +127,7 @@ src/
 ```
 
 ### Backend Architecture
+
 ```
 src/
 ├── app.py              # Main Flask application
@@ -131,6 +142,7 @@ src/
 ## 🚀 Installation Guide
 
 ### Prerequisites
+
 - Node.js 18+ and npm/yarn
 - Python 3.9+
 - Git
@@ -138,12 +150,14 @@ src/
 ### Frontend Setup
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/your-username/fraudguard-ai.git
    cd fraudguard-ai/frontend
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    # or
@@ -151,6 +165,7 @@ src/
    ```
 
 3. **Configure Firebase**
+
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
    - Enable Authentication and Firestore
    - Copy your Firebase config to `src/lib/firebase.ts`
@@ -165,22 +180,26 @@ src/
 ### Backend Setup
 
 1. **Navigate to backend directory**
+
    ```bash
    cd ../src
    ```
 
 2. **Create virtual environment**
+
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
 3. **Install dependencies**
+
    ```bash
    pip install -r requirements.txt
    ```
 
 4. **Train the models**
+
    ```bash
    python train_model.py
    python train_xgb_model.py
@@ -196,6 +215,7 @@ src/
 Create `.env` files in both frontend and backend directories:
 
 **Frontend (.env)**
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
@@ -206,6 +226,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ```
 
 **Backend (.env)**
+
 ```env
 FLASK_ENV=development
 SECRET_KEY=your_secret_key
@@ -215,6 +236,7 @@ MODEL_PATH=models/
 ## 📱 Usage
 
 ### User Registration and Login
+
 1. Navigate to the application URL
 2. Click "Sign up" to create a new account
 3. Fill in your details and submit
@@ -222,12 +244,14 @@ MODEL_PATH=models/
 5. Login with your credentials
 
 ### Dashboard Overview
+
 - View key metrics and statistics
 - Monitor recent transactions
 - Access quick actions
 - Check system status
 
 ### Fraud Detection Analysis
+
 1. Navigate to "Fraud Detection" page
 2. Enter transaction details in the form
 3. Click "Analyze Transaction"
@@ -235,6 +259,7 @@ MODEL_PATH=models/
 5. Take appropriate action based on recommendations
 
 ### Navigation
+
 - **Dashboard**: Overview and statistics
 - **Fraud Detection**: Transaction analysis tool
 - **About**: System information and team details
@@ -243,6 +268,7 @@ MODEL_PATH=models/
 ## 🔌 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:5000
 ```
@@ -250,11 +276,13 @@ http://localhost:5000
 ### Endpoints
 
 #### Health Check
+
 ```http
 GET /health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -264,15 +292,17 @@ GET /health
 ```
 
 #### Fraud Prediction
+
 ```http
 POST /predict
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
-  "amount": 150.50,
+  "amount": 150.5,
   "hour": 14,
   "dayOfWeek": 2,
   "category": "electronics",
@@ -288,6 +318,7 @@ Content-Type: application/json
 ```
 
 **Response:**
+
 ```json
 {
   "prediction": "legitimate",
@@ -298,11 +329,13 @@ Content-Type: application/json
 ```
 
 #### Dashboard Statistics
+
 ```http
 GET /stats
 ```
 
 **Response:**
+
 ```json
 {
   "totalTransactions": 1234,
@@ -317,7 +350,9 @@ GET /stats
 ```
 
 ### Error Handling
+
 All endpoints return appropriate HTTP status codes:
+
 - `200`: Success
 - `400`: Bad Request
 - `401`: Unauthorized
@@ -327,6 +362,7 @@ All endpoints return appropriate HTTP status codes:
 ## 🎨 Frontend Components
 
 ### UI Components (Shadcn/ui)
+
 - **Button**: Customizable button component with variants
 - **Input**: Form input with validation support
 - **Card**: Container component for content sections
@@ -334,6 +370,7 @@ All endpoints return appropriate HTTP status codes:
 - **Toast**: Notification system
 
 ### Page Components
+
 - **LoginPage**: User authentication interface
 - **RegisterPage**: Account creation form
 - **DashboardPage**: Main dashboard with metrics
@@ -341,11 +378,13 @@ All endpoints return appropriate HTTP status codes:
 - **AboutPage**: Information and team details
 
 ### Utility Components
+
 - **Navigation**: Responsive navigation bar
 - **ProtectedRoute**: Route protection wrapper
 - **AuthContext**: Authentication state management
 
 ### Styling Features
+
 - **Responsive Design**: Mobile-first approach
 - **Dark Mode**: Toggle between light and dark themes
 - **Animations**: Smooth transitions and micro-interactions
@@ -355,19 +394,23 @@ All endpoints return appropriate HTTP status codes:
 ## 🤖 Machine Learning Models
 
 ### Model Architecture
+
 The system employs an ensemble approach combining multiple algorithms:
 
 1. **Random Forest Classifier**
+
    - Handles complex feature interactions
    - Provides feature importance rankings
    - Robust against overfitting
 
 2. **XGBoost**
+
    - Gradient boosting for high performance
    - Excellent handling of imbalanced data
    - Fast prediction times
 
 3. **Logistic Regression**
+
    - Interpretable baseline model
    - Quick training and prediction
    - Good for linear relationships
@@ -378,6 +421,7 @@ The system employs an ensemble approach combining multiple algorithms:
    - Improved overall accuracy
 
 ### Feature Engineering
+
 - **Numerical Features**: Amount, hour, day of week, age, quantity
 - **Categorical Features**: Category, gender, country, device, payment method
 - **One-Hot Encoding**: Convert categorical variables to numerical
@@ -385,6 +429,7 @@ The system employs an ensemble approach combining multiple algorithms:
 - **Class Balancing**: SMOTE for handling imbalanced datasets
 
 ### Model Performance
+
 - **Accuracy**: >95% on test data
 - **Precision**: High precision to minimize false positives
 - **Recall**: Balanced recall to catch actual fraud
@@ -392,6 +437,7 @@ The system employs an ensemble approach combining multiple algorithms:
 - **AUC-ROC**: Strong area under the curve
 
 ### Training Process
+
 1. **Data Preprocessing**: Clean and prepare transaction data
 2. **Feature Engineering**: Create and transform features
 3. **Train-Test Split**: Stratified split to maintain class balance
@@ -403,6 +449,7 @@ The system employs an ensemble approach combining multiple algorithms:
 ## 🔥 Firebase Integration
 
 ### Authentication
+
 - **Email/Password**: Traditional authentication method
 - **Social Login**: Google, Facebook, Twitter (configurable)
 - **Multi-factor Authentication**: Additional security layer
@@ -410,6 +457,7 @@ The system employs an ensemble approach combining multiple algorithms:
 - **Email Verification**: Account verification process
 
 ### Firestore Database
+
 ```javascript
 // User Profile Structure
 {
@@ -437,16 +485,17 @@ The system employs an ensemble approach combining multiple algorithms:
 ```
 
 ### Security Rules
+
 ```javascript
 // Firestore Security Rules
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /users/{userId} {
-      allow read, write: if request.auth != null 
+      allow read, write: if request.auth != null
         && request.auth.uid == userId;
     }
-    
+
     match /transactions/{transactionId} {
       allow read, write: if request.auth != null;
     }
@@ -455,7 +504,9 @@ service cloud.firestore {
 ```
 
 ### Authentication Context
+
 The `AuthContext` provides:
+
 - User state management
 - Login and logout functions
 - User profile management
@@ -467,6 +518,7 @@ The `AuthContext` provides:
 ### Frontend Deployment (Vercel)
 
 1. **Connect Repository**
+
    ```bash
    vercel --prod
    ```
@@ -486,11 +538,13 @@ The `AuthContext` provides:
 ### Backend Deployment (Heroku)
 
 1. **Create Heroku App**
+
    ```bash
    heroku create fraudguard-api
    ```
 
 2. **Set Environment Variables**
+
    ```bash
    heroku config:set FLASK_ENV=production
    heroku config:set SECRET_KEY=your_secret_key
@@ -504,6 +558,7 @@ The `AuthContext` provides:
 ### Docker Deployment
 
 **Frontend Dockerfile:**
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -516,6 +571,7 @@ CMD ["npm", "run", "preview"]
 ```
 
 **Backend Dockerfile:**
+
 ```dockerfile
 FROM python:3.9-slim
 WORKDIR /app
@@ -527,8 +583,9 @@ CMD ["python", "app.py"]
 ```
 
 **Docker Compose:**
+
 ```yaml
-version: '3.8'
+version: "3.8"
 services:
   frontend:
     build: ./frontend
@@ -536,7 +593,7 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-  
+
   backend:
     build: ./src
     ports:
@@ -548,6 +605,7 @@ services:
 ## 🧪 Testing
 
 ### Frontend Testing
+
 ```bash
 # Unit tests
 npm run test
@@ -560,6 +618,7 @@ npm run test:coverage
 ```
 
 ### Backend Testing
+
 ```bash
 # Unit tests
 pytest tests/
@@ -572,6 +631,7 @@ pytest tests/models/
 ```
 
 ### Test Coverage
+
 - **Frontend**: Jest and React Testing Library
 - **Backend**: pytest and unittest
 - **E2E**: Cypress or Playwright
@@ -581,18 +641,21 @@ pytest tests/models/
 ## 📊 Monitoring and Analytics
 
 ### Performance Monitoring
+
 - **Response Times**: API endpoint performance
 - **Error Rates**: System error tracking
 - **User Analytics**: Usage patterns and behavior
 - **Model Performance**: Accuracy and drift monitoring
 
 ### Logging
+
 - **Application Logs**: Structured logging with levels
 - **Audit Logs**: User actions and security events
 - **Performance Logs**: System performance metrics
 - **Error Logs**: Exception tracking and debugging
 
 ### Metrics Dashboard
+
 - **Business Metrics**: Transactions, fraud rates, savings
 - **Technical Metrics**: Response times, error rates, uptime
 - **User Metrics**: Active users, session duration
@@ -601,18 +664,21 @@ pytest tests/models/
 ## 🔒 Security Considerations
 
 ### Data Protection
+
 - **Encryption**: Data encrypted in transit and at rest
 - **PII Handling**: Secure handling of personal information
 - **Data Retention**: Automated data lifecycle management
 - **Backup Security**: Encrypted backups with access controls
 
 ### Authentication Security
+
 - **JWT Tokens**: Secure token-based authentication
 - **Rate Limiting**: API rate limiting and throttling
 - **Session Management**: Secure session handling
 - **Password Policy**: Strong password requirements
 
 ### Infrastructure Security
+
 - **HTTPS**: SSL/TLS encryption for all communications
 - **CORS**: Proper cross-origin resource sharing
 - **Security Headers**: CSP, HSTS, and other security headers
@@ -621,6 +687,7 @@ pytest tests/models/
 ## 🤝 Contributing
 
 ### Development Guidelines
+
 1. **Fork the repository**
 2. **Create feature branch**: `git checkout -b feature/amazing-feature`
 3. **Commit changes**: `git commit -m 'Add amazing feature'`
@@ -628,6 +695,7 @@ pytest tests/models/
 5. **Open Pull Request**
 
 ### Code Standards
+
 - **ESLint**: JavaScript/TypeScript linting
 - **Prettier**: Code formatting
 - **PEP 8**: Python code style
@@ -635,6 +703,7 @@ pytest tests/models/
 - **Documentation**: Comprehensive code documentation
 
 ### Testing Requirements
+
 - **Unit Tests**: Minimum 80% coverage
 - **Integration Tests**: API endpoint testing
 - **E2E Tests**: Critical user journey testing
@@ -647,18 +716,21 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Support
 
 ### Documentation
+
 - **User Guide**: Comprehensive user documentation
 - **API Reference**: Complete API documentation
 - **Troubleshooting**: Common issues and solutions
 - **FAQ**: Frequently asked questions
 
 ### Contact Information
+
 - **Email**: support@fraudguard-ai.com
 - **GitHub Issues**: [Project Issues](https://github.com/your-username/fraudguard-ai/issues)
 - **Discord**: [Community Server](https://discord.gg/fraudguard-ai)
 - **Documentation**: [Official Docs](https://docs.fraudguard-ai.com)
 
 ### Professional Services
+
 - **Custom Integration**: Tailored implementation services
 - **Training**: User and developer training programs
 - **Consulting**: Fraud detection strategy consulting
@@ -679,4 +751,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Built with ❤️ by the FraudGuard AI Team**
 
-*Protecting businesses from financial fraud, one transaction at a time.*
+_Protecting businesses from financial fraud, one transaction at a time._

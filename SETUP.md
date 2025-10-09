@@ -90,6 +90,7 @@ mainproj/
 ## Features Implemented
 
 ### ✅ Core Features
+
 - [x] User Authentication (Firebase)
 - [x] Login Page with animated UI
 - [x] Registration Page with form validation
@@ -102,6 +103,7 @@ mainproj/
 - [x] Risk factor analysis
 
 ### ✅ Technical Features
+
 - [x] React 18 with TypeScript
 - [x] Tailwind CSS styling
 - [x] Shadcn/ui components
@@ -114,6 +116,7 @@ mainproj/
 - [x] Error handling
 
 ### ✅ UI/UX Features
+
 - [x] Glass morphism effects
 - [x] Gradient backgrounds
 - [x] Smooth animations
@@ -125,15 +128,16 @@ mainproj/
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | /health  | Health check |
-| POST   | /predict | Fraud prediction |
+| Method | Endpoint | Description          |
+| ------ | -------- | -------------------- |
+| GET    | /health  | Health check         |
+| POST   | /predict | Fraud prediction     |
 | GET    | /stats   | Dashboard statistics |
 
 ## Environment Variables
 
 Create `.env` file in frontend directory:
+
 ```env
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
@@ -148,6 +152,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ### Common Issues
 
 1. **Module not found errors**: Install all dependencies
+
    ```bash
    npm install  # Frontend
    pip install -r requirements.txt  # Backend
@@ -156,6 +161,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 2. **Firebase not configured**: Update firebase.ts with your config
 
 3. **Models not found**: Run training scripts first
+
    ```bash
    python train_model.py
    ```
@@ -184,6 +190,7 @@ VITE_FIREBASE_APP_ID=your_app_id
 ## Support
 
 For issues or questions:
+
 1. Check the troubleshooting section
 2. Review the logs for error messages
 3. Ensure all dependencies are installed
