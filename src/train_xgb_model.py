@@ -10,7 +10,7 @@ import os
 # ============================
 # 1. Load the Dataset
 # ============================
-data_path = "data/bal_dataset.csv"
+data_path = "../data/bal_dataset.csv"
 try:
     df = pd.read_csv(data_path)
     print("✅ Dataset Loaded Successfully")
@@ -77,7 +77,7 @@ print(confusion_matrix(y_test, y_pred))
 # 5. Save the Model and Scaler
 # ============================
 # Ensure the models directory exists
-output_dir = "models"
+output_dir = "../models"
 os.makedirs(output_dir, exist_ok=True)
 
 # Save the XGBoost model
