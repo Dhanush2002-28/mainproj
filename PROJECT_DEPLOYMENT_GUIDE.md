@@ -250,41 +250,50 @@ mainproj/
 The project has been cleaned up by removing the following unnecessary items:
 
 #### **Deleted Folders:**
+
 1. **`notebooks/`** - Data analysis folder
+
    - `eda.py` - Exploratory data analysis script (not needed for production)
 
 2. **`static/`** - Static web assets folder
+
    - `css/` - CSS files folder
      - `style.css` - Additional styling (replaced by Tailwind CSS)
    - `js/` - JavaScript files folder
      - `script.js` - Additional JavaScript (replaced by React components)
 
 3. **`templates/`** - HTML templates folder
+
    - `index.html` - Main HTML template (using React components instead)
    - `result.html` - Results HTML template (using React components instead)
 
 4. **`ppt/`** - Presentation files folder
+
    - `review_ppt.pptx` - Project review presentation (not needed for deployment)
 
 5. **`reports/`** - Documentation folder
+
    - `report.docx` - Detailed project report (replaced by this deployment guide)
 
 6. **`venv/`** - Python virtual environment folder
    - Complete virtual environment with all installed packages (users create their own)
 
 #### **Deleted Files:**
+
 1. **`TECHNICAL_DOCUMENTATION.md`** - Old technical documentation (replaced by this deployment guide)
 2. **`SETUP.md`** - Setup instructions file (information now included in this guide)
 3. **`run.bat`** - Windows batch script for running the application (not needed for deployment)
 4. **`run.sh`** - Linux/macOS shell script for running the application (not needed for deployment)
 
 #### **Total Cleanup Summary:**
+
 - **6 folders removed** with all their contents
 - **4 individual files removed**
 - **Estimated space saved**: ~50-75 MB (including virtual environment)
 - **Files kept**: Only production-essential files and code
 
 #### **Why These Files Were Removed:**
+
 - **Development artifacts**: EDA scripts, old documentation, batch files
 - **Redundant files**: Multiple documentation sources, unused static assets
 - **Environment-specific**: Virtual environment (users create their own)
