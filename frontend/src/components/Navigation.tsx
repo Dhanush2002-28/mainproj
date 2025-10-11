@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Shield, 
-  Home, 
-  Search, 
-  Info, 
-  User, 
-  LogOut, 
-  Menu, 
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Shield,
+  Home,
+  Search,
+  Info,
+  User,
+  LogOut,
+  Menu,
   X,
-  ChevronDown
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
+  ChevronDown,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/DemoAuthContext";
 
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,9 +25,9 @@ const Navigation: React.FC = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
-      console.error('Failed to logout:', error);
+      console.error("Failed to logout:", error);
     }
   };
 
@@ -36,9 +36,9 @@ const Navigation: React.FC = () => {
   };
 
   const navigationItems = [
-    { path: '/dashboard', label: 'Dashboard', icon: Home },
-    { path: '/fraud-detection', label: 'Fraud Detection', icon: Search },
-    { path: '/about', label: 'About', icon: Info },
+    { path: "/dashboard", label: "Dashboard", icon: Home },
+    { path: "/fraud-detection", label: "Fraud Detection", icon: Search },
+    { path: "/about", label: "About", icon: Info },
   ];
 
   if (!user) {
@@ -53,7 +53,9 @@ const Navigation: React.FC = () => {
           <div className="flex items-center">
             <Link to="/dashboard" className="flex items-center space-x-2">
               <Shield className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold text-gray-900">FraudGuard AI</span>
+              <span className="text-xl font-bold text-gray-900">
+                FraudGuard AI
+              </span>
             </Link>
           </div>
 
@@ -65,8 +67,8 @@ const Navigation: React.FC = () => {
                 to={item.path}
                 className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                   isActive(item.path)
-                    ? 'text-primary bg-primary/10'
-                    : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                    ? "text-primary bg-primary/10"
+                    : "text-gray-600 hover:text-primary hover:bg-gray-50"
                 }`}
               >
                 <item.icon className="h-4 w-4" />
@@ -85,7 +87,7 @@ const Navigation: React.FC = () => {
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                   <User className="h-4 w-4 text-white" />
                 </div>
-                <span>{userProfile?.displayName || 'User'}</span>
+                <span>{userProfile?.displayName || "User"}</span>
                 <ChevronDown className="h-4 w-4" />
               </button>
 
@@ -122,7 +124,11 @@ const Navigation: React.FC = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="text-gray-600 hover:text-primary transition-colors"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>
@@ -133,7 +139,7 @@ const Navigation: React.FC = () => {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
+            animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden bg-white border-t border-gray-200"
           >
@@ -145,15 +151,15 @@ const Navigation: React.FC = () => {
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium transition-colors ${
                     isActive(item.path)
-                      ? 'text-primary bg-primary/10'
-                      : 'text-gray-600 hover:text-primary hover:bg-gray-50'
+                      ? "text-primary bg-primary/10"
+                      : "text-gray-600 hover:text-primary hover:bg-gray-50"
                   }`}
                 >
                   <item.icon className="h-5 w-5" />
                   <span>{item.label}</span>
                 </Link>
               ))}
-              
+
               <div className="border-t border-gray-200 pt-4 mt-4">
                 <div className="px-3 py-2">
                   <p className="text-sm font-medium text-gray-900">

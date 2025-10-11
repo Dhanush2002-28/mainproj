@@ -1,15 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from '@/contexts/AuthContext';
-import Navigation from '@/components/Navigation';
-import LoginPage from '@/pages/LoginPage';
-import RegisterPage from '@/pages/RegisterPage';
-import DashboardPage from '@/pages/DashboardPage';
-import FraudDetectionPage from '@/pages/FraudDetectionPage';
-import AboutPage from '@/pages/AboutPage';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "@/contexts/DemoAuthContext";
+import Navigation from "@/components/Navigation";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import DashboardPage from "@/pages/DashboardPage";
+import FraudDetectionPage from "@/pages/FraudDetectionPage";
+import AboutPage from "@/pages/AboutPage";
 
 // Protected Route component
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const { user } = useAuth();
   return user ? <>{children}</> : <Navigate to="/login" replace />;
 };
@@ -21,7 +28,9 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 // Layout component for authenticated pages
-const AuthenticatedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const AuthenticatedLayout: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
@@ -88,7 +97,7 @@ const App: React.FC = () => {
 
             {/* Default redirect */}
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            
+
             {/* Catch all route */}
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Routes>

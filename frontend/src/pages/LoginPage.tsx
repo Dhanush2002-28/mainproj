@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, Mail, Lock, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { useAuth } from "@/contexts/DemoAuthContext";
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { signIn } = useAuth();
   const navigate = useNavigate();
@@ -21,13 +28,13 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       await signIn(email, password);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error: any) {
-      setError(error.message || 'Failed to sign in');
+      setError(error.message || "Failed to sign in");
     } finally {
       setLoading(false);
     }
@@ -51,7 +58,9 @@ const LoginPage: React.FC = () => {
             >
               <Shield className="h-8 w-8 text-primary" />
             </motion.div>
-            <CardTitle className="text-2xl font-bold text-white">Welcome Back</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">
+              Welcome Back
+            </CardTitle>
             <CardDescription className="text-white/80">
               Sign in to access your fraud detection dashboard
             </CardDescription>
@@ -67,9 +76,11 @@ const LoginPage: React.FC = () => {
                   <p className="text-sm text-destructive">{error}</p>
                 </motion.div>
               )}
-              
+
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email" className="text-white">
+                  Email
+                </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
@@ -85,12 +96,14 @@ const LoginPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password" className="text-white">
+                  Password
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
                     id="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -102,7 +115,11 @@ const LoginPage: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -112,19 +129,23 @@ const LoginPage: React.FC = () => {
                 className="w-full bg-primary hover:bg-primary/90 text-white"
                 disabled={loading}
               >
-                {loading ? 'Signing in...' : 'Sign In'}
+                {loading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm text-white/80">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-primary hover:underline font-medium">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-primary hover:underline font-medium"
+              >
                 Sign up
               </Link>
             </div>
             <div className="text-center text-xs text-white/60">
-              By signing in, you agree to our terms of service and privacy policy.
+              By signing in, you agree to our terms of service and privacy
+              policy.
             </div>
           </CardFooter>
         </Card>

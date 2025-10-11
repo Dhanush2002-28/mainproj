@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Shield, 
-  AlertTriangle, 
-  CheckCircle, 
-  Upload, 
-  FileText, 
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+  Upload,
+  FileText,
   Calculator,
   TrendingUp,
-  Activity
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+  Activity,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
 
 interface PredictionResult {
-  prediction: 'fraud' | 'legitimate';
+  prediction: "fraud" | "legitimate";
   confidence: number;
   riskFactors: string[];
 }
@@ -38,71 +44,94 @@ interface TransactionData {
 
 const FraudDetectionPage: React.FC = () => {
   const [formData, setFormData] = useState<TransactionData>({
-    amount: 0,
-    hour: 12,
+    amount: 1000,
+    hour: 14,
     dayOfWeek: 1,
-    category: 'groceries',
-    age: 30,
-    gender: 'M',
-    country: 'USA',
-    device: 'desktop',
-    paymentMethod: 'credit_card',
+    category: "groceries",
+    age: 28,
+    gender: "M",
+    country: "Mumbai",
+    device: "mobile",
+    paymentMethod: "upi",
     itemQuantity: 1,
-    shippingAddress: 'Same as billing',
-    browserInfo: 'Chrome'
+    shippingAddress: "Same as billing",
+    browserInfo: "Chrome",
   });
-  
+
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const categories = ['groceries', 'electronics', 'clothing', 'books', 'toys', 'home'];
-  const countries = ['USA', 'UK', 'Canada', 'Germany', 'France', 'India', 'China'];
-  const devices = ['desktop', 'mobile', 'tablet'];
-  const paymentMethods = ['credit_card', 'debit_card', 'paypal', 'bank_transfer', 'crypto'];
-  const browsers = ['Chrome', 'Firefox', 'Safari', 'Edge'];
+  const categories = [
+    "groceries",
+    "electronics",
+    "clothing",
+    "books",
+    "food_delivery",
+    "mobile_recharge",
+  ];
+  const countries = [
+    "Mumbai",
+    "Delhi",
+    "Bangalore",
+    "Chennai",
+    "Kolkata",
+    "Pune",
+    "Hyderabad",
+  ];
+  const devices = ["mobile", "desktop", "tablet"];
+  const paymentMethods = [
+    "upi",
+    "credit_card",
+    "debit_card",
+    "net_banking",
+    "wallet",
+  ];
+  const browsers = ["Chrome", "Firefox", "Safari", "Edge"];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: name === 'amount' || name === 'hour' || name === 'dayOfWeek' || name === 'age' || name === 'itemQuantity'
-        ? parseFloat(value) || 0
-        : value
+      [name]:
+        name === "amount" ||
+        name === "hour" ||
+        name === "dayOfWeek" ||
+        name === "age" ||
+        name === "itemQuantity"
+          ? parseFloat(value) || 0
+          : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
+    setPrediction(null);
 
     try {
-      const response = await fetch('/api/predict', {
-        method: 'POST',
+      const response = await fetch("/api/predict", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to get prediction');
+        throw new Error("Failed to get prediction");
       }
 
       const result = await response.json();
       setPrediction(result);
     } catch (error) {
-      console.error('Error:', error);
-      // Mock prediction for demo
-      const mockPrediction: PredictionResult = {
-        prediction: formData.amount > 1000 || formData.hour < 6 ? 'fraud' : 'legitimate',
-        confidence: Math.random() * 0.3 + 0.7,
-        riskFactors: [
-          ...(formData.amount > 1000 ? ['High transaction amount'] : []),
-          ...(formData.hour < 6 || formData.hour > 23 ? ['Unusual transaction time'] : []),
-          ...(formData.paymentMethod === 'crypto' ? ['Cryptocurrency payment'] : []),
-        ]
-      };
-      setPrediction(mockPrediction);
+      console.error("Error:", error);
+      setError(
+        "Failed to connect to the fraud detection service. Please check if the backend is running."
+      );
     } finally {
       setLoading(false);
     }
@@ -118,10 +147,13 @@ const FraudDetectionPage: React.FC = () => {
         >
           <div className="flex items-center justify-center mb-4">
             <Shield className="h-12 w-12 text-primary mr-3" />
-            <h1 className="text-4xl font-bold text-gray-900">AI Fraud Detection</h1>
+            <h1 className="text-4xl font-bold text-gray-900">
+              AI Fraud Detection - India
+            </h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Enter transaction details below to analyze the likelihood of fraud using our advanced AI model.
+            Enter Indian transaction details below to analyze fraud risk using
+            AI using our advanced AI model.
           </p>
         </motion.div>
 
@@ -146,7 +178,7 @@ const FraudDetectionPage: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="amount">Transaction Amount ($)</Label>
+                      <Label htmlFor="amount">Transaction Amount (₹)</Label>
                       <Input
                         id="amount"
                         name="amount"
@@ -197,8 +229,10 @@ const FraudDetectionPage: React.FC = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                         required
                       >
-                        {categories.map(cat => (
-                          <option key={cat} value={cat}>{cat}</option>
+                        {categories.map((cat) => (
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -233,7 +267,7 @@ const FraudDetectionPage: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="country">Country</Label>
+                      <Label htmlFor="country">City</Label>
                       <select
                         id="country"
                         name="country"
@@ -242,8 +276,10 @@ const FraudDetectionPage: React.FC = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                         required
                       >
-                        {countries.map(country => (
-                          <option key={country} value={country}>{country}</option>
+                        {countries.map((country) => (
+                          <option key={country} value={country}>
+                            {country}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -258,8 +294,10 @@ const FraudDetectionPage: React.FC = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                         required
                       >
-                        {devices.map(device => (
-                          <option key={device} value={device}>{device}</option>
+                        {devices.map((device) => (
+                          <option key={device} value={device}>
+                            {device}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -274,8 +312,10 @@ const FraudDetectionPage: React.FC = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                         required
                       >
-                        {paymentMethods.map(method => (
-                          <option key={method} value={method}>{method.replace('_', ' ')}</option>
+                        {paymentMethods.map((method) => (
+                          <option key={method} value={method}>
+                            {method.replace("_", " ")}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -318,18 +358,16 @@ const FraudDetectionPage: React.FC = () => {
                         className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
                         required
                       >
-                        {browsers.map(browser => (
-                          <option key={browser} value={browser}>{browser}</option>
+                        {browsers.map((browser) => (
+                          <option key={browser} value={browser}>
+                            {browser}
+                          </option>
                         ))}
                       </select>
                     </div>
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full"
-                    disabled={loading}
-                  >
+                  <Button type="submit" className="w-full" disabled={loading}>
                     {loading ? (
                       <>
                         <Activity className="h-4 w-4 mr-2 animate-spin" />
@@ -364,6 +402,19 @@ const FraudDetectionPage: React.FC = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="p-4 bg-red-500/10 border border-red-500/20 rounded-lg mb-4"
+                  >
+                    <div className="flex items-center gap-2">
+                      <AlertTriangle className="h-5 w-5 text-red-500" />
+                      <p className="text-red-500 font-medium">Error</p>
+                    </div>
+                    <p className="text-red-400 mt-1">{error}</p>
+                  </motion.div>
+                )}
                 {prediction ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
@@ -371,13 +422,15 @@ const FraudDetectionPage: React.FC = () => {
                     className="space-y-6"
                   >
                     {/* Prediction Result */}
-                    <div className={`p-6 rounded-lg ${
-                      prediction.prediction === 'fraud' 
-                        ? 'fraud-gradient text-white' 
-                        : 'safe-gradient text-white'
-                    }`}>
+                    <div
+                      className={`p-6 rounded-lg ${
+                        prediction.prediction === "fraud"
+                          ? "fraud-gradient text-white"
+                          : "safe-gradient text-white"
+                      }`}
+                    >
                       <div className="flex items-center justify-center mb-4">
-                        {prediction.prediction === 'fraud' ? (
+                        {prediction.prediction === "fraud" ? (
                           <AlertTriangle className="h-12 w-12" />
                         ) : (
                           <CheckCircle className="h-12 w-12" />
@@ -385,10 +438,13 @@ const FraudDetectionPage: React.FC = () => {
                       </div>
                       <div className="text-center">
                         <h3 className="text-2xl font-bold mb-2">
-                          {prediction.prediction === 'fraud' ? 'FRAUD DETECTED' : 'LEGITIMATE TRANSACTION'}
+                          {prediction.prediction === "fraud"
+                            ? "FRAUD DETECTED"
+                            : "LEGITIMATE TRANSACTION"}
                         </h3>
                         <p className="text-lg opacity-90">
-                          Confidence: {(prediction.confidence * 100).toFixed(1)}%
+                          Confidence: {(prediction.confidence * 100).toFixed(1)}
+                          %
                         </p>
                       </div>
                     </div>
@@ -402,7 +458,10 @@ const FraudDetectionPage: React.FC = () => {
                         </h4>
                         <ul className="space-y-2">
                           {prediction.riskFactors.map((factor, index) => (
-                            <li key={index} className="flex items-center text-sm">
+                            <li
+                              key={index}
+                              className="flex items-center text-sm"
+                            >
                               <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
                               {factor}
                             </li>
@@ -415,7 +474,7 @@ const FraudDetectionPage: React.FC = () => {
                     <div>
                       <h4 className="font-semibold mb-3">Recommendations</h4>
                       <div className="text-sm text-gray-600 space-y-2">
-                        {prediction.prediction === 'fraud' ? (
+                        {prediction.prediction === "fraud" ? (
                           <>
                             <p>• Flag transaction for manual review</p>
                             <p>• Contact customer for verification</p>
@@ -436,7 +495,10 @@ const FraudDetectionPage: React.FC = () => {
                 ) : (
                   <div className="text-center text-gray-500 py-12">
                     <Upload className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Enter transaction details and click "Analyze Transaction" to see results</p>
+                    <p>
+                      Enter transaction details and click "Analyze Transaction"
+                      to see results
+                    </p>
                   </div>
                 )}
               </CardContent>

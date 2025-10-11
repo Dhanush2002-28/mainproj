@@ -1,58 +1,65 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, User, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { useAuth } from '@/contexts/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Eye, EyeOff, Mail, Lock, User, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { useAuth } from "@/contexts/DemoAuthContext";
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
-    displayName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    displayName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { signUp } = useAuth();
   const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       setLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError("Password must be at least 6 characters long");
       setLoading(false);
       return;
     }
 
     try {
       await signUp(formData.email, formData.password, formData.displayName);
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (error: any) {
-      setError(error.message || 'Failed to create account');
+      setError(error.message || "Failed to create account");
     } finally {
       setLoading(false);
     }
@@ -76,7 +83,9 @@ const RegisterPage: React.FC = () => {
             >
               <Shield className="h-8 w-8 text-primary" />
             </motion.div>
-            <CardTitle className="text-2xl font-bold text-white">Create Account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-white">
+              Create Account
+            </CardTitle>
             <CardDescription className="text-white/80">
               Join us to start detecting fraud with AI
             </CardDescription>
@@ -92,9 +101,11 @@ const RegisterPage: React.FC = () => {
                   <p className="text-sm text-destructive">{error}</p>
                 </motion.div>
               )}
-              
+
               <div className="space-y-2">
-                <Label htmlFor="displayName" className="text-white">Full Name</Label>
+                <Label htmlFor="displayName" className="text-white">
+                  Full Name
+                </Label>
                 <div className="relative">
                   <User className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
@@ -111,7 +122,9 @@ const RegisterPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-white">Email</Label>
+                <Label htmlFor="email" className="text-white">
+                  Email
+                </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
@@ -128,13 +141,15 @@ const RegisterPage: React.FC = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-white">Password</Label>
+                <Label htmlFor="password" className="text-white">
+                  Password
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
                     id="password"
                     name="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={formData.password}
                     onChange={handleInputChange}
@@ -146,19 +161,25 @@ const RegisterPage: React.FC = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
                   >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-white">Confirm Password</Label>
+                <Label htmlFor="confirmPassword" className="text-white">
+                  Confirm Password
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-white/60" />
                   <Input
                     id="confirmPassword"
                     name="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    type={showConfirmPassword ? "text" : "password"}
                     placeholder="Confirm your password"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
@@ -170,7 +191,11 @@ const RegisterPage: React.FC = () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-3 text-white/60 hover:text-white transition-colors"
                   >
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -180,19 +205,23 @@ const RegisterPage: React.FC = () => {
                 className="w-full bg-primary hover:bg-primary/90 text-white"
                 disabled={loading}
               >
-                {loading ? 'Creating Account...' : 'Create Account'}
+                {loading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <div className="text-center text-sm text-white/80">
-              Already have an account?{' '}
-              <Link to="/login" className="text-primary hover:underline font-medium">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-primary hover:underline font-medium"
+              >
                 Sign in
               </Link>
             </div>
             <div className="text-center text-xs text-white/60">
-              By creating an account, you agree to our terms of service and privacy policy.
+              By creating an account, you agree to our terms of service and
+              privacy policy.
             </div>
           </CardFooter>
         </Card>

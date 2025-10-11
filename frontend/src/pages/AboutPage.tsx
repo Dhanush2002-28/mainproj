@@ -1,76 +1,86 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { 
-  Shield, 
-  Users, 
-  Award, 
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  Shield,
+  Users,
+  Award,
   Target,
   Brain,
   Zap,
   CheckCircle,
   Mail,
   Phone,
-  MapPin
-} from 'lucide-react';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+  MapPin,
+} from "lucide-react";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const AboutPage: React.FC = () => {
   const features = [
     {
       icon: Brain,
-      title: 'Advanced AI Technology',
-      description: 'Powered by state-of-the-art machine learning algorithms including Random Forest and XGBoost models.'
+      title: "Advanced AI Technology",
+      description:
+        "Powered by state-of-the-art machine learning algorithms including Random Forest and XGBoost models.",
     },
     {
       icon: Zap,
-      title: 'Real-time Detection',
-      description: 'Instant fraud analysis with results delivered in milliseconds for immediate decision making.'
+      title: "Real-time Detection",
+      description:
+        "Instant fraud analysis with results delivered in milliseconds for immediate decision making.",
     },
     {
       icon: Shield,
-      title: 'High Accuracy',
-      description: 'Over 95% accuracy rate in fraud detection with continuous learning and model improvement.'
+      title: "High Accuracy",
+      description:
+        "Over 95% accuracy rate in fraud detection with continuous learning and model improvement.",
     },
     {
       icon: Target,
-      title: 'Risk Assessment',
-      description: 'Comprehensive risk scoring with detailed analysis of transaction patterns and anomalies.'
-    }
+      title: "Risk Assessment",
+      description:
+        "Comprehensive risk scoring with detailed analysis of transaction patterns and anomalies.",
+    },
   ];
 
   const team = [
     {
-      name: 'Dr. Sarah Johnson',
-      role: 'Lead Data Scientist',
-      experience: '10+ years in AI/ML',
-      image: '/api/placeholder/150/150'
+      name: "Dr. Sarah Johnson",
+      role: "Lead Data Scientist",
+      experience: "10+ years in AI/ML",
+      image: "/api/placeholder/150/150",
     },
     {
-      name: 'Michael Chen',
-      role: 'Senior Software Engineer',
-      experience: '8+ years in fintech',
-      image: '/api/placeholder/150/150'
+      name: "Michael Chen",
+      role: "Senior Software Engineer",
+      experience: "8+ years in fintech",
+      image: "/api/placeholder/150/150",
     },
     {
-      name: 'Emily Rodriguez',
-      role: 'Fraud Prevention Specialist',
-      experience: '12+ years in banking',
-      image: '/api/placeholder/150/150'
+      name: "Emily Rodriguez",
+      role: "Fraud Prevention Specialist",
+      experience: "12+ years in banking",
+      image: "/api/placeholder/150/150",
     },
     {
-      name: 'David Kim',
-      role: 'Security Architect',
-      experience: '15+ years in cybersecurity',
-      image: '/api/placeholder/150/150'
-    }
+      name: "David Kim",
+      role: "Security Architect",
+      experience: "15+ years in cybersecurity",
+      image: "/api/placeholder/150/150",
+    },
   ];
 
   const stats = [
-    { value: '99.7%', label: 'Accuracy Rate' },
-    { value: '50M+', label: 'Transactions Analyzed' },
-    { value: '<100ms', label: 'Response Time' },
-    { value: '500+', label: 'Companies Protected' }
+    { value: "99.7%", label: "Accuracy Rate" },
+    { value: "50M+", label: "Transactions Analyzed" },
+    { value: "<100ms", label: "Response Time" },
+    { value: "500+", label: "Companies Protected" },
   ];
 
   return (
@@ -85,11 +95,15 @@ const AboutPage: React.FC = () => {
           >
             <div className="flex items-center justify-center mb-6">
               <Shield className="h-16 w-16 text-primary mr-4" />
-              <h1 className="text-5xl font-bold text-gray-900">FraudGuard AI</h1>
+              <h1 className="text-5xl font-bold text-gray-900">
+                FraudGuard AI
+              </h1>
             </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Protecting businesses and consumers from financial fraud using cutting-edge artificial intelligence 
-              and machine learning technologies. Our mission is to create a safer digital economy for everyone.
+              Protecting businesses and consumers from financial fraud using
+              cutting-edge artificial intelligence and machine learning
+              technologies. Our mission is to create a safer digital economy for
+              everyone.
             </p>
           </motion.div>
         </div>
@@ -112,7 +126,9 @@ const AboutPage: React.FC = () => {
                 transition={{ delay: 0.3 + index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                  {stat.value}
+                </div>
                 <div className="text-gray-600">{stat.label}</div>
               </motion.div>
             ))}
@@ -129,10 +145,13 @@ const AboutPage: React.FC = () => {
             transition={{ delay: 0.4 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Why Choose FraudGuard AI?</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Why Choose FraudGuard AI?
+            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our platform combines advanced technology with deep industry expertise to deliver 
-              unparalleled fraud detection capabilities.
+              Our platform combines advanced technology with deep industry
+              expertise to deliver fraud detection capabilities tailored for the
+              Indian market.
             </p>
           </motion.div>
 
@@ -149,7 +168,9 @@ const AboutPage: React.FC = () => {
                     <div className="mx-auto mb-4 p-3 bg-primary/10 rounded-full w-fit">
                       <feature.icon className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
+                    <CardTitle className="text-xl mb-2">
+                      {feature.title}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CardDescription className="text-center">
@@ -172,9 +193,12 @@ const AboutPage: React.FC = () => {
             transition={{ delay: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Technology Stack</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Our Technology Stack
+            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Built with industry-leading technologies and frameworks for maximum performance and reliability.
+              Built with industry-leading technologies and frameworks for
+              maximum performance and reliability.
             </p>
           </motion.div>
 
@@ -265,10 +289,12 @@ const AboutPage: React.FC = () => {
             transition={{ delay: 0.9 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Meet Our Expert Team</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Meet Our Expert Team
+            </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our diverse team of experts brings decades of combined experience in AI, cybersecurity, 
-              and financial technology.
+              Our diverse team of experts brings decades of combined experience
+              in AI, cybersecurity, and financial technology.
             </p>
           </motion.div>
 
@@ -285,8 +311,12 @@ const AboutPage: React.FC = () => {
                     <div className="w-24 h-24 bg-gradient-to-br from-primary to-primary/70 rounded-full mx-auto mb-4 flex items-center justify-center">
                       <Users className="h-12 w-12 text-white" />
                     </div>
-                    <h3 className="font-semibold text-lg mb-1">{member.name}</h3>
-                    <p className="text-primary font-medium mb-2">{member.role}</p>
+                    <h3 className="font-semibold text-lg mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-primary font-medium mb-2">
+                      {member.role}
+                    </p>
                     <p className="text-sm text-gray-600">{member.experience}</p>
                   </CardContent>
                 </Card>
@@ -305,9 +335,12 @@ const AboutPage: React.FC = () => {
             transition={{ delay: 1.2 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Get In Touch
+            </h2>
             <p className="text-lg text-gray-600">
-              Ready to protect your business from fraud? Contact us to learn more about our solutions.
+              Ready to protect your business from fraud? Contact us to learn
+              more about our solutions.
             </p>
           </motion.div>
 
