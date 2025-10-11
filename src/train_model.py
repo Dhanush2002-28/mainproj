@@ -12,7 +12,7 @@ from imblearn.over_sampling import SMOTE
 # ============================
 # 1. Load the Dataset
 # ============================
-data_path = "../data/bal_dataset.csv"
+data_path = "data/bal_dataset.csv"
 df = pd.read_csv(data_path)
 print("✅ Dataset Loaded Successfully")
 
@@ -82,10 +82,10 @@ print(confusion_matrix(y_test, y_pred))
 # ============================
 # 6. Save the Model
 # ============================
-with open("../models/fraud_model.pkl", "wb") as f:
+with open("models/fraud_model.pkl", "wb") as f:
     pickle.dump(model, f)
 
-with open("../models/scaler.pkl", "wb") as f:
+with open("models/scaler.pkl", "wb") as f:
     pickle.dump(scaler, f)
 
 print("\n💾 Model and Scaler saved successfully in 'models/' folder!")

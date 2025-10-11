@@ -41,5 +41,5 @@ data = {
 
 # Create DataFrame and save to CSV
 df = pd.DataFrame(data)
-df.to_csv("bal_dataset.csv", index=False)
-print("Dataset saved as 'bal_dataset.csv'")
+df.to_csv("fraud_dataset_10000_balanced.csv", index=False)
+print("Dataset saved as 'fraud_dataset_10000_balanced.csv'")
