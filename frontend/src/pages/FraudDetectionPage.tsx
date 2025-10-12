@@ -22,9 +22,13 @@ import {
 } from "@/components/ui/card";
 
 interface PredictionResult {
-  prediction: "fraud" | "legitimate";
-  confidence: number;
-  riskFactors: string[];
+  is_fraud: boolean;
+  fraud_probability: number;
+  xgb_probability: number;
+  risk_level: string;
+  risk_factors: string[];
+  transaction_id: string;
+  timestamp: string;
 }
 
 interface TransactionData {
@@ -113,12 +117,34 @@ const FraudDetectionPage: React.FC = () => {
     setPrediction(null);
 
     try {
+      // Transform form data to match API expectations
+      const apiData = {
+        amount: formData.amount,
+        payment_method: formData.paymentMethod,
+        category: formData.category,
+        gender: formData.gender,
+        city: formData.country, // Using country field as city for Indian context
+        device: formData.device,
+        shipping_address: formData.shippingAddress,
+        browser_info: formData.browserInfo,
+        age: formData.age,
+        hour: formData.hour,
+        day_of_week: formData.dayOfWeek,
+        is_weekend: formData.dayOfWeek === 0 || formData.dayOfWeek === 6, // Sunday=0, Saturday=6
+        is_new_device: false, // Default value
+        is_different_city: false, // Default value
+        failed_attempts: 0, // Default value
+        shipping_billing_match: formData.shippingAddress === "Same as billing",
+        account_age: 365, // Default 1 year old account
+        transaction_frequency: 5, // Default frequency
+      };
+
       const response = await fetch("/api/predict", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(apiData),
       });
 
       if (!response.ok) {
@@ -424,13 +450,13 @@ const FraudDetectionPage: React.FC = () => {
                     {/* Prediction Result */}
                     <div
                       className={`p-6 rounded-lg ${
-                        prediction.prediction === "fraud"
+                        prediction.is_fraud
                           ? "fraud-gradient text-white"
                           : "safe-gradient text-white"
                       }`}
                     >
                       <div className="flex items-center justify-center mb-4">
-                        {prediction.prediction === "fraud" ? (
+                        {prediction.is_fraud ? (
                           <AlertTriangle className="h-12 w-12" />
                         ) : (
                           <CheckCircle className="h-12 w-12" />
@@ -438,34 +464,42 @@ const FraudDetectionPage: React.FC = () => {
                       </div>
                       <div className="text-center">
                         <h3 className="text-2xl font-bold mb-2">
-                          {prediction.prediction === "fraud"
+                          {prediction.is_fraud
                             ? "FRAUD DETECTED"
                             : "LEGITIMATE TRANSACTION"}
                         </h3>
                         <p className="text-lg opacity-90">
-                          Confidence: {(prediction.confidence * 100).toFixed(1)}
-                          %
+                          Confidence: {prediction.fraud_probability.toFixed(1)}%
+                        </p>
+                        <p className="text-sm opacity-75">
+                          Risk Level: {prediction.risk_level} | XGB:{" "}
+                          {prediction.xgb_probability.toFixed(1)}%
+                        </p>
+                        <p className="text-xs opacity-60">
+                          Transaction ID: {prediction.transaction_id}
                         </p>
                       </div>
                     </div>
 
                     {/* Risk Factors */}
-                    {prediction.riskFactors.length > 0 && (
+                    {prediction.risk_factors.length > 0 && (
                       <div>
                         <h4 className="font-semibold mb-3 flex items-center">
                           <AlertTriangle className="h-4 w-4 mr-2 text-orange-500" />
                           Risk Factors Identified
                         </h4>
                         <ul className="space-y-2">
-                          {prediction.riskFactors.map((factor, index) => (
-                            <li
-                              key={index}
-                              className="flex items-center text-sm"
-                            >
-                              <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
-                              {factor}
-                            </li>
-                          ))}
+                          {prediction.risk_factors.map(
+                            (factor: string, index: number) => (
+                              <li
+                                key={index}
+                                className="flex items-center text-sm"
+                              >
+                                <div className="w-2 h-2 bg-orange-500 rounded-full mr-2" />
+                                {factor}
+                              </li>
+                            )
+                          )}
                         </ul>
                       </div>
                     )}
@@ -474,7 +508,7 @@ const FraudDetectionPage: React.FC = () => {
                     <div>
                       <h4 className="font-semibold mb-3">Recommendations</h4>
                       <div className="text-sm text-gray-600 space-y-2">
-                        {prediction.prediction === "fraud" ? (
+                        {prediction.is_fraud ? (
                           <>
                             <p>• Flag transaction for manual review</p>
                             <p>• Contact customer for verification</p>

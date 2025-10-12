@@ -24,11 +24,10 @@ import { Link } from "react-router-dom";
 interface DashboardStats {
   totalTransactions: number;
   fraudDetected: number;
-  legitimate: number;
-  totalSaved: number;
+  legitimateTransactions: number;
+  totalSaved: string;
   fraudRate: number;
-  accuracyRate: number;
-  avgTransactionAmount: number;
+  avgTransactionAmount: string;
   recentTransactions: Array<{
     id: string;
     amount: number;
@@ -42,7 +41,8 @@ interface DashboardStats {
   paymentMethodStats?: Array<{
     method: string;
     total: number;
-    fraudRate: number;
+    fraud: number;
+    fraud_rate: number;
   }>;
 }
 
@@ -96,9 +96,10 @@ const DashboardPage: React.FC = () => {
         },
         {
           title: "Legitimate",
-          value: dashboardStats.legitimate.toLocaleString("en-IN"),
+          value: dashboardStats.legitimateTransactions.toLocaleString("en-IN"),
           change: `${(
-            (dashboardStats.legitimate / dashboardStats.totalTransactions) *
+            (dashboardStats.legitimateTransactions /
+              dashboardStats.totalTransactions) *
             100
           ).toFixed(1)}%`,
           icon: CheckCircle,
@@ -106,10 +107,8 @@ const DashboardPage: React.FC = () => {
         },
         {
           title: "Total Saved",
-          value: `₹${(dashboardStats.totalSaved / 100000).toFixed(1)}L`,
-          change: `₹${dashboardStats.avgTransactionAmount.toLocaleString(
-            "en-IN"
-          )} avg`,
+          value: dashboardStats.totalSaved,
+          change: `${dashboardStats.avgTransactionAmount} avg`,
           icon: DollarSign,
           color: "text-purple-600",
         },

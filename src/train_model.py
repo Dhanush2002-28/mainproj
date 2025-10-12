@@ -12,7 +12,7 @@ from imblearn.over_sampling import SMOTE
 # ============================
 # 1. Load the Dataset
 # ============================
-data_path = "data/bal_dataset.csv"
+data_path = "../data/bal_dataset.csv"
 df = pd.read_csv(data_path)
 print("✅ Dataset Loaded Successfully")
 
@@ -24,12 +24,27 @@ print("✅ Dataset Loaded Successfully")
 X = df.drop("is_fraud", axis=1)
 y = df["is_fraud"]
 
+# Store feature information before encoding
+categorical_columns = X.select_dtypes(include=['object']).columns.tolist()
+numeric_columns = X.select_dtypes(include=['number']).columns.tolist()
+
 # Convert categorical columns to numeric
-X = pd.get_dummies(X, drop_first=True)
+X_encoded = pd.get_dummies(X, drop_first=True)
+feature_columns = X_encoded.columns.tolist()
+
+# Create encoders dictionary for compatibility with app.py
+encoders = {}
+for col in categorical_columns:
+    # Store the unique values and dummy column mapping
+    unique_values = X[col].unique()
+    encoders[col] = {
+        'unique_values': unique_values,
+        'dummy_columns': [c for c in X_encoded.columns if c.startswith(f"{col}_")]
+    }
 
 # Standardize numeric features
 scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+X_scaled = scaler.fit_transform(X_encoded)
 
 # Split with stratification to preserve class balance
 X_train, X_test, y_train, y_test = train_test_split(
@@ -80,7 +95,7 @@ print("Confusion Matrix:")
 print(confusion_matrix(y_test, y_pred))
 
 # ============================
-# 6. Save the Model
+# 6. Save the Model and All Required Files
 # ============================
 with open("models/fraud_model.pkl", "wb") as f:
     pickle.dump(model, f)
@@ -88,4 +103,10 @@ with open("models/fraud_model.pkl", "wb") as f:
 with open("models/scaler.pkl", "wb") as f:
     pickle.dump(scaler, f)
 
-print("\n💾 Model and Scaler saved successfully in 'models/' folder!")
+with open("models/encoders.pkl", "wb") as f:
+    pickle.dump(encoders, f)
+
+with open("models/feature_columns.pkl", "wb") as f:
+    pickle.dump(feature_columns, f)
+
+print("\n💾 Model, Scaler, Encoders, and Feature Columns saved successfully in 'models/' folder!")
