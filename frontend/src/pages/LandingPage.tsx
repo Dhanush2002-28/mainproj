@@ -103,7 +103,7 @@ const LandingPage: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Navigation */}
       <LandingNavbar />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20">
         {/* Background Animation */}
@@ -349,7 +349,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section id="about" className="py-20 bg-gradient-to-r from-blue-50 to-purple-50">
+      <section
+        id="about"
+        className="py-20 bg-gradient-to-r from-blue-50 to-purple-50"
+      >
         <div className="max-w-7xl mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -406,7 +409,10 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section id="contact" className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+      <section
+        id="contact"
+        className="py-20 bg-gradient-to-r from-blue-600 to-purple-600"
+      >
         <div className="max-w-4xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

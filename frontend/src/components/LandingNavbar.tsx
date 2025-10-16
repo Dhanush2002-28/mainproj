@@ -10,7 +10,7 @@ const LandingNavbar: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
     setIsMenuOpen(false);
   };
@@ -77,13 +77,13 @@ const LandingNavbar: React.FC = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <button
-              onClick={() => scrollToSection('features')}
+              onClick={() => scrollToSection("features")}
               className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
             >
               Features
             </button>
             <button
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection("about")}
               className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
             >
               About
@@ -95,7 +95,7 @@ const LandingNavbar: React.FC = () => {
               Learn More
             </Link>
             <button
-              onClick={() => scrollToSection('contact')}
+              onClick={() => scrollToSection("contact")}
               className="text-gray-700 hover:text-gray-900 transition-colors duration-200"
             >
               Contact
@@ -105,7 +105,10 @@ const LandingNavbar: React.FC = () => {
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Link to="/login">
-              <Button variant="ghost" className="text-gray-700 hover:bg-gray-100">
+              <Button
+                variant="ghost"
+                className="text-gray-700 hover:bg-gray-100"
+              >
                 Sign In
               </Button>
             </Link>
@@ -121,7 +124,11 @@ const LandingNavbar: React.FC = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className="md:hidden text-gray-700 p-2"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
           </button>
         </div>
 
@@ -135,13 +142,13 @@ const LandingNavbar: React.FC = () => {
           >
             <div className="flex flex-col space-y-4">
               <button
-                onClick={() => scrollToSection('features')}
+                onClick={() => scrollToSection("features")}
                 className="text-gray-700 hover:text-gray-900 transition-colors duration-200 py-2 text-left"
               >
                 Features
               </button>
               <button
-                onClick={() => scrollToSection('about')}
+                onClick={() => scrollToSection("about")}
                 className="text-gray-700 hover:text-gray-900 transition-colors duration-200 py-2 text-left"
               >
                 About
@@ -154,18 +161,24 @@ const LandingNavbar: React.FC = () => {
                 Learn More
               </Link>
               <button
-                onClick={() => scrollToSection('contact')}
+                onClick={() => scrollToSection("contact")}
                 className="text-gray-700 hover:text-gray-900 transition-colors duration-200 py-2 text-left"
               >
                 Contact
               </button>
               <div className="flex flex-col space-y-2 pt-4">
                 <Link to="/login" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full text-gray-700 hover:bg-gray-100">
+                  <Button
+                    variant="ghost"
+                    className="w-full text-gray-700 hover:bg-gray-100"
+                  >
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/fraud-detection" onClick={() => setIsMenuOpen(false)}>
+                <Link
+                  to="/fraud-detection"
+                  onClick={() => setIsMenuOpen(false)}
+                >
                   <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
                     Try Detection
                   </Button>

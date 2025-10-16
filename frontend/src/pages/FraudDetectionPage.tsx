@@ -108,7 +108,9 @@ const FraudDetectionPage: React.FC = () => {
         name === "dayOfWeek" ||
         name === "age" ||
         name === "itemQuantity"
-          ? value === "" ? "" : (parseFloat(value) || "")
+          ? value === ""
+            ? ""
+            : parseFloat(value) || ""
           : value,
     }));
   };
@@ -133,7 +135,9 @@ const FraudDetectionPage: React.FC = () => {
         age: parseInt(formData.age as string) || 0,
         hour: parseInt(formData.hour as string) || 0,
         day_of_week: parseInt(formData.dayOfWeek as string) || 0,
-        is_weekend: (parseInt(formData.dayOfWeek as string) || 0) === 0 || (parseInt(formData.dayOfWeek as string) || 0) === 6, // Sunday=0, Saturday=6
+        is_weekend:
+          (parseInt(formData.dayOfWeek as string) || 0) === 0 ||
+          (parseInt(formData.dayOfWeek as string) || 0) === 6, // Sunday=0, Saturday=6
         is_new_device: false, // Default value
         is_different_city: false, // Default value
         failed_attempts: 0, // Default value
