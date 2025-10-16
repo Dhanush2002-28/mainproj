@@ -7,11 +7,15 @@ import {
 } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/DemoAuthContext";
 import Navigation from "@/components/Navigation";
+import LandingPage from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
 import DashboardPage from "@/pages/DashboardPage";
 import FraudDetectionPage from "@/pages/FraudDetectionPage";
 import AboutPage from "@/pages/AboutPage";
+import AnalyticsPage from "@/pages/AnalyticsPage";
+import UserManagementPage from "@/pages/UserManagementPage";
+import FlaggedTransactionsPage from "@/pages/FlaggedTransactionsPage";
 
 // Protected Route component
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
@@ -47,6 +51,14 @@ const App: React.FC = () => {
           <Routes>
             {/* Public routes */}
             <Route
+              path="/"
+              element={
+                <PublicRoute>
+                  <LandingPage />
+                </PublicRoute>
+              }
+            />
+            <Route
               path="/login"
               element={
                 <PublicRoute>
@@ -62,6 +74,7 @@ const App: React.FC = () => {
                 </PublicRoute>
               }
             />
+            <Route path="/about-public" element={<AboutPage />} />
 
             {/* Protected routes */}
             <Route
@@ -94,12 +107,39 @@ const App: React.FC = () => {
                 </ProtectedRoute>
               }
             />
-
-            {/* Default redirect */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute>
+                  <AuthenticatedLayout>
+                    <AnalyticsPage />
+                  </AuthenticatedLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute>
+                  <AuthenticatedLayout>
+                    <UserManagementPage />
+                  </AuthenticatedLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/flagged-transactions"
+              element={
+                <ProtectedRoute>
+                  <AuthenticatedLayout>
+                    <FlaggedTransactionsPage />
+                  </AuthenticatedLayout>
+                </ProtectedRoute>
+              }
+            />
 
             {/* Catch all route */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </AuthProvider>

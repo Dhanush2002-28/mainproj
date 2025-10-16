@@ -53,10 +53,32 @@ const DashboardPage: React.FC = () => {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
     fetchDashboardStats();
-  }, []);
+    checkUserStatus();
+  }, [userProfile]);
+
+  const checkUserStatus = () => {
+    if (userProfile) {
+      const now = new Date();
+      const createdAt = new Date(userProfile.createdAt);
+      const timeDiff = now.getTime() - createdAt.getTime();
+      const daysDiff = timeDiff / (1000 * 3600 * 24);
+
+      // Check if user is new (created within last 24 hours) or first login in this session
+      const isFirstLogin = !localStorage.getItem("hasLoggedInBefore");
+      const isRecentUser = daysDiff < 1;
+
+      setIsNewUser(isFirstLogin || isRecentUser);
+
+      // Mark that user has logged in before
+      if (isFirstLogin) {
+        localStorage.setItem("hasLoggedInBefore", "true");
+      }
+    }
+  };
 
   const fetchDashboardStats = async () => {
     try {
@@ -157,10 +179,16 @@ const DashboardPage: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                Welcome back, {userProfile?.displayName || "User"}!
+                {isNewUser
+                  ? `Welcome to FraudGuard AI, ${
+                      userProfile?.displayName || "User"
+                    }!`
+                  : `Welcome back, ${userProfile?.displayName || "User"}!`}
               </h1>
               <p className="text-gray-600">
-                Here's your Indian fraud detection dashboard overview
+                {isNewUser
+                  ? "Get started with our comprehensive fraud detection system and explore the powerful analytics dashboard below."
+                  : "Here's your latest fraud detection dashboard overview and system insights."}
               </p>
             </div>
             <div className="flex items-center space-x-4">
@@ -214,6 +242,52 @@ const DashboardPage: React.FC = () => {
             </motion.div>
           ))}
         </div>
+
+        {/* New User Welcome Card */}
+        {isNewUser && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mb-8"
+          >
+            <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold mb-2">
+                      🎉 Welcome to FraudGuard AI!
+                    </h3>
+                    <p className="text-blue-100 mb-4">
+                      You're now protected by our advanced fraud detection
+                      system. Start by analyzing your first transaction or
+                      explore our analytics dashboard.
+                    </p>
+                    <div className="flex gap-3">
+                      <Link to="/fraud-detection">
+                        <Button variant="secondary" size="sm">
+                          Start First Analysis
+                        </Button>
+                      </Link>
+                      <Link to="/about">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-white border-white hover:bg-white/10"
+                        >
+                          Learn More
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="hidden md:block">
+                    <Shield className="h-16 w-16 text-blue-200" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Recent Transactions */}
@@ -317,20 +391,26 @@ const DashboardPage: React.FC = () => {
                   </Button>
                 </Link>
 
-                <Button className="w-full justify-start" variant="outline">
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  View Analytics Report
-                </Button>
+                <Link to="/analytics">
+                  <Button className="w-full justify-start" variant="outline">
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    View Analytics Report
+                  </Button>
+                </Link>
 
-                <Button className="w-full justify-start" variant="outline">
-                  <Users className="h-4 w-4 mr-2" />
-                  Manage User Accounts
-                </Button>
+                <Link to="/users">
+                  <Button className="w-full justify-start" variant="outline">
+                    <Users className="h-4 w-4 mr-2" />
+                    Manage User Accounts
+                  </Button>
+                </Link>
 
-                <Button className="w-full justify-start" variant="outline">
-                  <AlertTriangle className="h-4 w-4 mr-2" />
-                  Review Flagged Transactions
-                </Button>
+                <Link to="/flagged-transactions">
+                  <Button className="w-full justify-start" variant="outline">
+                    <AlertTriangle className="h-4 w-4 mr-2" />
+                    Review Flagged Transactions
+                  </Button>
+                </Link>
               </CardContent>
             </Card>
 

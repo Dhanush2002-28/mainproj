@@ -25,27 +25,27 @@ const AboutPage: React.FC = () => {
   const features = [
     {
       icon: Brain,
-      title: "Advanced AI Technology",
+      title: "Multi-Factor Risk Analysis",
       description:
-        "Powered by state-of-the-art machine learning algorithms including Random Forest and XGBoost models.",
+        "Analyzes 12+ risk factors including transaction amount, frequency, location, device patterns, user behavior, and network analysis for comprehensive fraud detection.",
     },
     {
       icon: Zap,
       title: "Real-time Detection",
       description:
-        "Instant fraud analysis with results delivered in milliseconds for immediate decision making.",
+        "Lightning-fast fraud analysis with results delivered instantly for immediate decision making and transaction processing.",
     },
     {
       icon: Shield,
-      title: "High Accuracy",
+      title: "97.59% Accuracy",
       description:
-        "Over 95% accuracy rate in fraud detection with continuous learning and model improvement.",
+        "Industry-leading accuracy rate in high-risk fraud detection with ensemble machine learning models and continuous improvement.",
     },
     {
       icon: Target,
-      title: "Risk Assessment",
+      title: "Comprehensive Risk Scoring",
       description:
-        "Comprehensive risk scoring with detailed analysis of transaction patterns and anomalies.",
+        "Advanced risk assessment considering transaction patterns, user history, device fingerprinting, geographic anomalies, and behavioral analysis.",
     },
   ];
 
@@ -77,10 +77,10 @@ const AboutPage: React.FC = () => {
   ];
 
   const stats = [
-    { value: "99.7%", label: "Accuracy Rate" },
-    { value: "50M+", label: "Transactions Analyzed" },
-    { value: "<100ms", label: "Response Time" },
-    { value: "500+", label: "Companies Protected" },
+    { value: "97.59%", label: "High-Risk Accuracy" },
+    { value: "12+", label: "Risk Factors Analyzed" },
+    { value: "<50ms", label: "Response Time" },
+    { value: "100%", label: "API Uptime" },
   ];
 
   return (
@@ -100,10 +100,12 @@ const AboutPage: React.FC = () => {
               </h1>
             </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Protecting businesses and consumers from financial fraud using
-              cutting-edge artificial intelligence and machine learning
-              technologies. Our mission is to create a safer digital economy for
-              everyone.
+              Advanced fraud detection platform powered by ensemble machine
+              learning models that analyze 12+ risk factors including
+              transaction patterns, user behavior, device fingerprinting, and
+              network analysis. Achieving 97.59% accuracy in high-risk fraud
+              detection with comprehensive risk assessment beyond just
+              transaction amounts.
             </p>
           </motion.div>
         </div>
@@ -149,9 +151,10 @@ const AboutPage: React.FC = () => {
               Why Choose FraudGuard AI?
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Our platform combines advanced technology with deep industry
-              expertise to deliver fraud detection capabilities tailored for the
-              Indian market.
+              Our platform combines ensemble machine learning algorithms with
+              comprehensive risk analysis to detect fraudulent transactions
+              based on multiple factors beyond just transaction amounts,
+              providing superior accuracy and detailed risk insights.
             </p>
           </motion.div>
 
@@ -218,7 +221,7 @@ const AboutPage: React.FC = () => {
                 <CardContent className="space-y-3">
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    <span>Random Forest Classifier</span>
+                    <span>Random Forest Classifier (97.59% accuracy)</span>
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
@@ -226,11 +229,11 @@ const AboutPage: React.FC = () => {
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    <span>Logistic Regression</span>
+                    <span>12+ Risk Factor Analysis</span>
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                    <span>Stacking Classifier</span>
+                    <span>Comprehensive Risk Scoring</span>
                   </div>
                   <div className="flex items-center">
                     <CheckCircle className="h-4 w-4 text-green-500 mr-2" />

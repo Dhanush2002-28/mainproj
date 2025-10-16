@@ -9,7 +9,10 @@ import {
   Calculator,
   TrendingUp,
   Activity,
+  Download,
 } from "lucide-react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,34 +35,34 @@ interface PredictionResult {
 }
 
 interface TransactionData {
-  amount: number;
-  hour: number;
-  dayOfWeek: number;
+  amount: number | string;
+  hour: number | string;
+  dayOfWeek: number | string;
   category: string;
-  age: number;
+  age: number | string;
   gender: string;
   country: string;
   device: string;
   paymentMethod: string;
-  itemQuantity: number;
+  itemQuantity: number | string;
   shippingAddress: string;
   browserInfo: string;
 }
 
 const FraudDetectionPage: React.FC = () => {
   const [formData, setFormData] = useState<TransactionData>({
-    amount: 1000,
-    hour: 14,
-    dayOfWeek: 1,
-    category: "groceries",
-    age: 28,
-    gender: "M",
-    country: "Mumbai",
-    device: "mobile",
-    paymentMethod: "upi",
-    itemQuantity: 1,
-    shippingAddress: "Same as billing",
-    browserInfo: "Chrome",
+    amount: "",
+    hour: "",
+    dayOfWeek: "",
+    category: "",
+    age: "",
+    gender: "",
+    country: "",
+    device: "",
+    paymentMethod: "",
+    itemQuantity: "",
+    shippingAddress: "",
+    browserInfo: "",
   });
 
   const [prediction, setPrediction] = useState<PredictionResult | null>(null);
@@ -105,7 +108,7 @@ const FraudDetectionPage: React.FC = () => {
         name === "dayOfWeek" ||
         name === "age" ||
         name === "itemQuantity"
-          ? parseFloat(value) || 0
+          ? value === "" ? "" : (parseFloat(value) || "")
           : value,
     }));
   };
@@ -119,7 +122,7 @@ const FraudDetectionPage: React.FC = () => {
     try {
       // Transform form data to match API expectations
       const apiData = {
-        amount: formData.amount,
+        amount: parseFloat(formData.amount as string) || 0,
         payment_method: formData.paymentMethod,
         category: formData.category,
         gender: formData.gender,
@@ -127,10 +130,10 @@ const FraudDetectionPage: React.FC = () => {
         device: formData.device,
         shipping_address: formData.shippingAddress,
         browser_info: formData.browserInfo,
-        age: formData.age,
-        hour: formData.hour,
-        day_of_week: formData.dayOfWeek,
-        is_weekend: formData.dayOfWeek === 0 || formData.dayOfWeek === 6, // Sunday=0, Saturday=6
+        age: parseInt(formData.age as string) || 0,
+        hour: parseInt(formData.hour as string) || 0,
+        day_of_week: parseInt(formData.dayOfWeek as string) || 0,
+        is_weekend: (parseInt(formData.dayOfWeek as string) || 0) === 0 || (parseInt(formData.dayOfWeek as string) || 0) === 6, // Sunday=0, Saturday=6
         is_new_device: false, // Default value
         is_different_city: false, // Default value
         failed_attempts: 0, // Default value
@@ -161,6 +164,162 @@ const FraudDetectionPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const generatePDFReport = async () => {
+    if (!prediction) return;
+
+    const pdf = new jsPDF();
+    const pageWidth = pdf.internal.pageSize.width;
+
+    // Header
+    pdf.setFontSize(20);
+    pdf.setTextColor(0, 100, 200);
+    pdf.text("Fraud Detection Analysis Report", pageWidth / 2, 20, {
+      align: "center",
+    });
+
+    // Transaction Details
+    pdf.setFontSize(16);
+    pdf.setTextColor(0, 0, 0);
+    pdf.text("Transaction Details", 20, 40);
+
+    pdf.setFontSize(11);
+    let yPos = 50;
+
+    const transactionDetails = [
+      `Transaction ID: ${prediction.transaction_id}`,
+      `Date & Time: ${new Date(prediction.timestamp).toLocaleString()}`,
+      `Amount: ₹${formData.amount.toLocaleString("en-IN")}`,
+      `Payment Method: ${formData.paymentMethod}`,
+      `Category: ${formData.category}`,
+      `City: ${formData.country}`,
+      `Device: ${formData.device}`,
+      `Age: ${formData.age}`,
+      `Hour: ${formData.hour}:00`,
+      `Day of Week: ${
+        [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ][formData.dayOfWeek]
+      }`,
+      `Item Quantity: ${formData.itemQuantity}`,
+      `Shipping Address: ${formData.shippingAddress}`,
+      `Browser: ${formData.browserInfo}`,
+    ];
+
+    transactionDetails.forEach((detail) => {
+      pdf.text(detail, 20, yPos);
+      yPos += 8;
+    });
+
+    // Analysis Results
+    yPos += 10;
+    pdf.setFontSize(16);
+    pdf.text("Analysis Results", 20, yPos);
+    yPos += 15;
+
+    pdf.setFontSize(12);
+    if (prediction.is_fraud) {
+      pdf.setTextColor(220, 20, 60); // Red for fraud
+    } else {
+      pdf.setTextColor(34, 139, 34); // Green for legitimate
+    }
+    pdf.text(
+      `Result: ${
+        prediction.is_fraud ? "FRAUD DETECTED" : "LEGITIMATE TRANSACTION"
+      }`,
+      20,
+      yPos
+    );
+    yPos += 10;
+
+    pdf.setTextColor(0, 0, 0);
+    pdf.text(
+      `Fraud Probability: ${prediction.fraud_probability.toFixed(2)}%`,
+      20,
+      yPos
+    );
+    yPos += 8;
+    pdf.text(`Risk Level: ${prediction.risk_level}`, 20, yPos);
+    yPos += 15;
+
+    // Risk Factors
+    if (prediction.risk_factors.length > 0) {
+      pdf.setFontSize(14);
+      pdf.text("Risk Factors Identified:", 20, yPos);
+      yPos += 10;
+
+      pdf.setFontSize(11);
+      prediction.risk_factors.forEach((factor, index) => {
+        const text = `${index + 1}. ${factor}`;
+        const lines = pdf.splitTextToSize(text, pageWidth - 40);
+        pdf.text(lines, 25, yPos);
+        yPos += lines.length * 6;
+
+        if (yPos > 270) {
+          // Check if we need a new page
+          pdf.addPage();
+          yPos = 20;
+        }
+      });
+    } else {
+      pdf.text("No specific risk factors identified.", 20, yPos);
+      yPos += 10;
+    }
+
+    // Recommendations
+    yPos += 10;
+    if (yPos > 250) {
+      pdf.addPage();
+      yPos = 20;
+    }
+
+    pdf.setFontSize(14);
+    pdf.text("Recommendations:", 20, yPos);
+    yPos += 10;
+
+    pdf.setFontSize(11);
+    const recommendations = prediction.is_fraud
+      ? [
+          "• Flag transaction for manual review",
+          "• Contact customer for verification",
+          "• Monitor account for suspicious activity",
+          "• Consider temporary account restrictions",
+        ]
+      : [
+          "• Transaction appears legitimate",
+          "• Continue normal processing",
+          "• Maintain regular monitoring",
+        ];
+
+    recommendations.forEach((rec) => {
+      pdf.text(rec, 20, yPos);
+      yPos += 8;
+    });
+
+    // Footer
+    pdf.setFontSize(8);
+    pdf.setTextColor(128, 128, 128);
+    pdf.text(
+      `Generated on: ${new Date().toLocaleString()}`,
+      20,
+      pdf.internal.pageSize.height - 10
+    );
+    pdf.text(
+      "AI Fraud Detection System - Confidential Report",
+      pageWidth / 2,
+      pdf.internal.pageSize.height - 10,
+      { align: "center" }
+    );
+
+    // Save the PDF
+    pdf.save(`fraud-analysis-${prediction.transaction_id}.pdf`);
   };
 
   return (
@@ -524,6 +683,17 @@ const FraudDetectionPage: React.FC = () => {
                           </>
                         )}
                       </div>
+                    </div>
+
+                    {/* Download PDF Report Button */}
+                    <div className="pt-4 border-t border-gray-200">
+                      <Button
+                        onClick={generatePDFReport}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-2"
+                      >
+                        <Download className="h-4 w-4" />
+                        Download Analysis Report (PDF)
+                      </Button>
                     </div>
                   </motion.div>
                 ) : (
